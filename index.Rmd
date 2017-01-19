@@ -1,5 +1,6 @@
 ---
 title: "IODS course project"
+author: "Milja von Lerber"
 output:
   html_document:
     theme: cosmo

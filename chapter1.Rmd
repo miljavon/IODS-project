@@ -1,10 +1,4 @@
 
-# About the project
-
-*Write a short description about the course and add a link to your github repository here. This is an R markdown (.Rmd) file so you can use R markdown syntax. See the 'Useful links' page in the mooc area (chapter 1) for instructions.*
-
-#About this course
-
 My feelings about this course are quite mixed, though positive. I am not sure how well I will do, but I will do my best, you can be certain about that!
 
 Milja

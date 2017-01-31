@@ -35,4 +35,7 @@ colnames((learning2014))
 learning2014 <- filter(learning2014, points > 0)
 setwd
 ?write.csv
-write.table(learning2014, file = "data", append = F)
+write.csv(learning2014, file = "learning2014")
+read.table("learning2014")
+head(learning2014)
+str(learning2014)

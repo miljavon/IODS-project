@@ -37,4 +37,4 @@ summary(learning2014$surf)
 #Average was 2,8.
 summary(learning2014$points)
 #I was happy to notice that the average amount of points was actually cuite high, with almost 23 points. 
-
+#moi

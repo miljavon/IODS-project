@@ -36,5 +36,24 @@ summary(learning2014$surf)
 #Surface learning was significantly lower than the other variables related to learning.
 #Average was 2,8.
 summary(learning2014$points)
-#I was happy to notice that the average amount of points was actually cuite high, with almost 23 points. 
-#moi
+#I was happy to notice that the average amount of points was actually quite high, with almost 23 points. 
+#Because it seems that attitude, strategic learning and surface learning have
+#the most effect on points, I'm going to do a regression model. 
+my_model2 <- lm(points ~ attitude + stra + surf, data = learning2014)
+my_model2
+summary(my_model2)
+#The model does not seem to explain very much, because R squared is just 0,2.
+#The only statistically significant variable seems to be attitude, although 
+#strategic learning and surface learning seem to be adding a little bit 
+#to the explanatory value of the model. 
+
+my_model1 <- lm (points ~ attitude, data =learning2014)
+summary(my_model1)
+qplot(attitude, points, data = learning2014) + geom_smooth(method = "lm")
+#now with my model I can see that on average when attitude gets one unit better
+#get the points over three units higher. The relationship has statistical
+#significance, but is still able to explain only about 20% of the amount of points. 
+#The intercept-variable seems to be also statistically significant, but it has very
+#little significance in real life.
+par(mfrow = c(2,2))
+plot(my_model2, which = c(1,2,5))

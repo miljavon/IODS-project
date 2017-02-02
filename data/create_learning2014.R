@@ -39,3 +39,5 @@ write.csv(learning2014, file = "learning2014")
 read.table("learning2014")
 head(learning2014)
 str(learning2014)
+
+#This is ready to be submitted. 

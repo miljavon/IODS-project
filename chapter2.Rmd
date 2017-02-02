@@ -10,7 +10,7 @@ Then I was ready to have the directory changed from default to IODS-project and 
 
 ##Analyzing, aka the fun part
 
-First I had to install some packages I could analyze the data with. After that I was good to go and make perhaps the most impressive graph I´ve ever made in my life: 
+First I had to install some packages I could analyze the data with. After that I was good to go and make perhaps the most impressive graph IÂ´ve ever made in my life: 
 
 ```{r echo = FALSE}
 library(ggplot2)

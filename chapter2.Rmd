@@ -1,7 +1,32 @@
-# Insert chapter 2 title here
+# Analyzing and wrangling data
 
-*Describe the work you have done this week and summarize your learning.*
+##Wrangling
 
-- Describe your work and results clearly. 
-- Assume the reader has an introductory course level understanding of writing and reading R code as well as statistical methods
-- Assume the reader has no previous knowledge of your data or the more advanced methods you are using  
+First I tried wrangling data with R. I read the data online to RStudio and started working with it. First, I explored the dimensions of the data, wich proved to be about 180 observations and 60 variables. 
+
+After that I molded the data in a form that was easy to analyze. I combined all the variables which described the same things. Lastly, I only kept seven columns: age, attitude, points, strategic learning, deep learning, surface learning and gender.
+
+Then I was ready to have the directory changed from default to IODS-project and save the data in a much prettier form.
+
+##Analyzing, aka the fun part
+
+First I had to install some packages I could analyze the data with. After that I was good to go and make perhaps the most impressive graph I´ve ever made in my life: 
+
+´´´{r echo = FALSE}
+p <- ggpairs(learning2014, mapping = aes(col = gender, alpha = 0.3), lower = list(combo = wrap("facethist", bins = 20)))
+p
+´´´
+
+From the graph you can clearly see the connections of the variables. 
+
+After that I printed the summaries of each variable. I am not going to print them here, but I'm going to tell briefly, what I found out.
+
+There were significantly more females than males. The age ranged from very young (17) to 55. The median was 22 though, which wasn't surprising.The overall attitude seems to have been modestly positive: about 3,5 out of five. 
+
+
+
+
+
+
+
+

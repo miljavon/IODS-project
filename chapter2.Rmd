@@ -12,10 +12,15 @@ Then I was ready to have the directory changed from default to IODS-project and 
 
 First I had to install some packages I could analyze the data with. After that I was good to go and make perhaps the most impressive graph I´ve ever made in my life: 
 
-´´´{r echo = FALSE}
+```{r echo = FALSE}
+library(ggplot2)
+library(GGally)
+learning2014 <- read.table("learning2014", header = TRUE, sep = ",")
+
 p <- ggpairs(learning2014, mapping = aes(col = gender, alpha = 0.3), lower = list(combo = wrap("facethist", bins = 20)))
 p
-´´´
+```
+
 
 From the graph you can clearly see the connections of the variables. 
 

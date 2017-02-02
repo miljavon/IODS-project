@@ -26,7 +26,32 @@ From the graph you can clearly see the connections of the variables.
 
 After that I printed the summaries of each variable. I am not going to print them here, but I'm going to tell briefly, what I found out.
 
-There were significantly more females than males. The age ranged from very young (17) to 55. The median was 22 though, which wasn't surprising.The overall attitude seems to have been modestly positive: about 3,5 out of five. 
+There were significantly more females than males. The age ranged from very young (17) to 55. The median was 22 though, which wasn't surprising.The overall attitude seems to have been modestly positive: about 3,5 out of five. Surface learning waas siginificantly lower than the other kinds of learning.
+
+Then I had to analyze, which variables had the most effect on points. 
+I concluded that attitude, surface learning and strategic learning were most important and I created a statistical model out of it. 
+
+```{r}
+library(ggplot2)
+library(GGally)
+learning2014 <- read.table("learning2014", header = TRUE, sep = ",")
+my_model2 <- lm(points ~ attitude + stra + surf, data = learning2014)
+summary(my_model2)
+```
+
+From the summary it is visible that the variables strategic and surface learning were not statistically significant, so I removed them from the model and made a picture of the more simple model. 
+
+```{r echo = FALSE}
+library(ggplot2)
+library(GGally)
+learning2014 <- read.table("learning2014", header = TRUE, sep = ",")
+my_model1 <- lm (points ~ attitude, data =learning2014)
+summary(my_model1)
+qplot(attitude, points, data = learning2014) + geom_smooth(method = "lm")
+```
+
+Now, with my model I can see that on average when attitude gets one unit better get the points over three units higher. The relationship has statistical significance, but is still able to explain only about 20% of the amount of points. 
+The intercept-variable seems to be also statistically significant, but it has very little significance in real life.
 
 
 

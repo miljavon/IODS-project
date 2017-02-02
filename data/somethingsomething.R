@@ -56,4 +56,5 @@ qplot(attitude, points, data = learning2014) + geom_smooth(method = "lm")
 #The intercept-variable seems to be also statistically significant, but it has very
 #little significance in real life.
 par(mfrow = c(2,2))
-plot(my_model2, which = c(1,2,5))
+plot(my_model1, which = c(1,2,5))
+

@@ -1,7 +1,8 @@
+This is the Introduction to open data science course in Helsinki unversity.
 
-My feelings about this course are quite mixed, though positive. I am not sure how well I will do, but I will do my best, you can be certain about that!
+My personal feelings about Introduction to open data science-course: my feelings about this course are quite mixed, though positive. I am not sure how well I will do, but I will do my best, you can be certain about that!
 
 Milja
 
-https://github.com/miljavon/IODS-project
+a link to my IODS repository: https://github.com/miljavon/IODS-project
 

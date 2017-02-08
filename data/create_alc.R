@@ -35,3 +35,18 @@ two_columns <- select(math_por, starts_with(column_name))
   }
 }
 glimpse(alc)
+#Creating averages of alcohol consumption
+library(dplyr)
+alc <- mutate(alc, alc_use = (Dalc + Walc) / 2)
+#Defining high usage of alcohol
+alc <- mutate(alc, high_use = alc_use > 2)
+
+#Checking that everything is alright
+glimpse(alc)
+
+#saving the data
+write.csv(alc, file = "alc")
+
+#alc-data is ready to be analyzed
+
+ 

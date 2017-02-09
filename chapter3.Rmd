@@ -1,3 +1,104 @@
+<<<<<<< HEAD
+---
+title: "chapter3"
+author: "Mililili"
+date: "8 helmikuuta 2017"
+output: html_document
+---
+#Chapter 3
+
+Here I will show how I analyzed the data. First I will look at the names of the variables. This data is collected from students. The point is to analyze their alcohol usage. 
+```{r}
+read.table(file = "student-mat.csv", sep = ";", header = T)
+read.table(file = "student-por.csv", sep = ";", header = T)
+colnames(alc)
+```
+Here you can see the names of the columns. In the whole dataset there are 382 observations of 35 variables.
+
+Now I will choose 4 interesting variables of the data and see how it affects the amounts the students drink alcohol. I will choose sex of the students, their fathers' level of education, their relationship status and the quality of their relationship within their families. 
+
+My personal hypothesis is that sex will have a minor effect on the amount of alcohol the students use. Men probably will drink more than women. 
+
+Whether the father is educated will have no significant relationship with overall usage of alcohol. It is probable though, that when it comes to high consumption, the father will have a lower education. 
+
+My personal hypothesis is that students with a romantic relationship won't drink as much as the ones that don't.
+
+My hypothesis is as well, that the better relationships students have with their families, the less they will drink.
+
+```{r}
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+
+alc %>% group_by(sex, high_use) %>% summarise(count = n(),father_education =mean(Fedu))  
+
+alc %>% group_by(sex, romantic) %>% summarise(count = n(),alcohol =mean(alc_use))
+
+
+alc %>% group_by(sex, high_use) %>% summarise(count = n(),family_relationships =mean(famrel))
+
+g2 <- ggplot(data = alc, aes(high_use), fill = sex)
+g2+geom_bar()+facet_wrap("sex")
+
+boxplot(alc_use ~ sex, data = alc)
+boxplot(alc_use ~ famrel, data = alc)
+
+```
+
+From the numerical summaries as well from the data visualization one can see, that being male definately affects the amount of alcohol students drink. 
+
+From the education of father you get different results for girls and boys.For girls those who drink a lot their fathers are more educated whereas when it comes to boys, those who drink a lot have on average a father with a lower education. The differences might mean nothing though: the differences are so minor. 
+
+For romantic relationships girls with a romantic elationship  drink less, but boys with a relationship drink actually more, which was surprising.This was also hardly significant.
+
+With family relationship the difference of people who use a lot of alcohol and ones who don't was actually very clear. People with a better relationship with their family rarely drink as much.
+
+```{r}
+m <- glm(high_use ~ sex + romantic+ Fedu + famrel, data = alc, family = "binomial")
+summary(m)
+```
+
+
+Here from the print of the summary we can see that like I said, romantic relationships and the father's education had statistically very little to do with alcohol consumption. Family relationship had some significance and sex was very important. So, from the coefficienst we can see that a male was almost definitely more likely to have high alcohol use with odds at almost 1. When it comes to family relationships, the odds are about 0,3 on the negative side, which means you are less likely to use a lot of alcohol.
+
+Counting confidence intervals:
+```{r}
+confint(m)
+
+```
+
+
+```{r}
+m1 <- glm(high_use ~ sex + famrel, data = alc, family = "binomial")
+probabilities <- predict(m1, type = "response")
+alc <- mutate(alc, probability = probabilities)
+alc <- mutate(alc, prediction = probability > 0.5)
+table(high_use = alc$high_use, prediction = alc$prediction)
+g <- ggplot(alc, aes(x =probability, y = high_use, col = prediction))
+g + geom_point()
+loss_func <- function(class, prob) {
+  n_wrong <- abs(class - prob) > 0.5
+  mean(n_wrong)
+}
+loss_func(class = alc$high_use, alc$probability)
+```
+
+From the predictions we can see that my model is not very good: almost a third were were falsely predicted. So the prediction power of my model is not very good. 
+
+Still, compared to random guessing, my model works better (because if I were to guess, I would have about 0.5 probability to get it right).
+
+Here I'm trying out cross validation.
+
+```{r}
+library(boot)
+cv <- cv.glm(data = alc, cost = loss_func, glmfit = m1, 10)
+cv$delta[1]
+```
+
+My model sadly is not better than the example model in datacamp. 
+
+
+=======
 ---
 title: "chapter3"
 author: "Mililili"
@@ -96,3 +197,4 @@ cv$delta[1]
 My model sadly is not better than the example model in datacamp. 
 
 
+>>>>>>> origin/master

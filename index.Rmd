@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ---
 title: "IODS course project"
 author: "Milja von Lerber"
@@ -28,32 +27,3 @@ output:
 ```
 
 =======
----
-title: "IODS course project"
-author: "Milja von Lerber"
-output:
-  html_document:
-    theme: cosmo
-    toc: true
-    toc_depth: 2
-    fig_caption: true
-    fig_width: 6
-    fig_height: 4
-    code_folding: hide
----
-
-***
-  
-```{r child = "chapter1.Rmd"}
-```
-  
-***
-  
-```{r child = "chapter2.Rmd"}
-```
-
-***
-```{r child = "chapter3.Rmd"}
-```
-
->>>>>>> origin/master

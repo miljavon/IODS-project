@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ---
 title: "chapter3"
 author: "Mililili"
@@ -9,9 +9,9 @@ output: html_document
 
 Here I will show how I analyzed the data. First I will look at the names of the variables. This data is collected from students. The point is to analyze their alcohol usage. 
 ```{r}
-read.table(file = "student-mat.csv", sep = ";", header = T)
-read.table(file = "student-por.csv", sep = ";", header = T)
-colnames(alc)
+url<- "http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt"
+alc <- read.table(url, sep = ",", header = TRUE)
+
 ```
 Here you can see the names of the columns. In the whole dataset there are 382 observations of 35 variables.
 
@@ -109,7 +109,6 @@ output: html_document
 
 Here I will show how I analyzed the data. First I will look at the names of the variables. This data is collected from students. The point is to analyze their alcohol usage. 
 ```{r}
-read.table(alc)
 colnames(alc)
 ```
 Here you can see the names of the columns. In the whole dataset there are 382 observations of 35 variables.

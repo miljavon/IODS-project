@@ -195,5 +195,3 @@ cv$delta[1]
 
 My model sadly is not better than the example model in datacamp. 
 
-
->>>>>>> origin/master

@@ -1,0 +1,29 @@
+---
+title: "chapter4"
+author: "Milja von Lerber"
+date: "15 helmikuuta 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Accessing the Boston-dataset and eploring the structure of the data.
+
+```{r}
+install.packages(MASS)
+library(MASS)
+data("Boston")
+str(Boston)
+```
+The data has 506 observations of 14 variables.
+Here I will show a brief graphical overview and show some short summaries of the variables
+
+```{r}
+summary(Boston)
+cor_matrix<-cor(Boston) %>% round(digits = 2)
+cor_matrix
+corrplot(cor_matrix, method="circle", type = "upper", cl.pos = "b", tl.pos = "d", tl.cex = 0.6)
+```
+

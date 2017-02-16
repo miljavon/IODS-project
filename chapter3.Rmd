@@ -193,5 +193,5 @@ cv <- cv.glm(data = alc, cost = loss_func, glmfit = m1, 10)
 cv$delta[1]
 ```
 
-My model sadly is not better than the example model in datacamp. 
+My model sadly is not better than the example model in datacamp. I sadly had no time to do bonus excercises, because github desktop was not working properly and I had to figure that out.  
 

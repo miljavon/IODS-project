@@ -31,5 +31,39 @@ cor_matrix<-cor(Boston) %>% round(digits = 2)
 corrplot(cor_matrix, method="circle", type = "upper", cl.pos = "b", tl.pos = "d", tl.cex = 0.6)
 ```
 Now we can see the summaries of the variables and a statistical overview. 
-From the variable crime we can see, that most of the people don't do crime. It is a small precentage, that commits almost all of the crime in Boston. Crime seems to be related to 
+From the variable crime we can see, that most of the people don't commit crime. It is a small precentage, that commits almost all of the crime in Boston. Crime seems to be positively related to index of accessibility to radial highways and full-value property-tax rate per \$10,000.
+
+The average number of rooms per dwelling seems to be around six and minimum over 3. The variable is quite evenly distributed, and it is negatively related to lower status of the population and positively related to median value of homes.
+
+Age is negatively related to Boston employment centers. The variable age seems to be quite strange though: the majority of data comes from people that are around 70 years old.The old people seem to live in areas with a high nitrogen concentration. 
+
+Next I will scale the data and print out the summaries. 
+
+```{r}
+boston_scaled <- scale(Boston)
+summary(boston_scaled)
+```
+Now we can see the scaled variables. It can be seen how the data is now more clearly distributed and the variables can be compared with each other. 
+
+Here I create a new crime variable from the scaled dataset and divide the data to test and train sets, in which there are 80% of the data. 
+
+```{r}
+boston_scaled<- scale(Boston)
+boston_scaled<-as.data.frame(boston_scaled)
+scaled_crim <- boston_scaled$crim
+bins <- quantile(scaled_crim)
+crime <- cut(scaled_crim, breaks = bins, include.lowest = TRUE, labels = c("low", "med_low", "med_high", "high"))
+boston_scaled$crime <- crime
+n <- nrow(boston_scaled)
+ind <- sample(n, size = n * 0.8)
+train <- boston_scaled[ind,]
+test <- boston_scaled[-ind,]
+```
+
+Here I will do linear discriminant analysis to observe the data. The target variable will be crime and all the other variables will act as predictors. 
+
+```{r}
+library(MASS)
+lda.fit <- lda(crime ~ ., data = train)
+```
 

@@ -12,18 +12,24 @@ knitr::opts_chunk$set(echo = TRUE)
 Accessing the Boston-dataset and eploring the structure of the data.
 
 ```{r}
-install.packages(MASS)
 library(MASS)
 data("Boston")
 str(Boston)
 ```
+
 The data has 506 observations of 14 variables.
 Here I will show a brief graphical overview and show some short summaries of the variables
+
+```{r, echo = FALSE}
+library(corrplot)
+library(tidyr)
+```
 
 ```{r}
 summary(Boston)
 cor_matrix<-cor(Boston) %>% round(digits = 2)
-cor_matrix
 corrplot(cor_matrix, method="circle", type = "upper", cl.pos = "b", tl.pos = "d", tl.cex = 0.6)
 ```
+Now we can see the summaries of the variables and a statistical overview. 
+From the variable crime we can see, that most of the people don't do crime. It is a small precentage, that commits almost all of the crime in Boston. Crime seems to be related to 
 

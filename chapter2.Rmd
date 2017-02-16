@@ -1,4 +1,4 @@
-# Analyzing and wrangling data
+# Chapter 2
 
 ##Wrangling
 
@@ -8,9 +8,9 @@ After that I molded the data in a form that was easy to analyze. I combined all 
 
 Then I was ready to have the directory changed from default to IODS-project and save the data in a much prettier form.
 
-##Analyzing, aka the fun part
+##Analyzing
 
-First I had to install some packages I could analyze the data with. After that I was good to go and make perhaps the most impressive graph IÂ´ve ever made in my life: 
+First I had to install some packages I could analyze the data with. After that I was good to go and make perhaps the most impressive graph I´ve ever made in my life: 
 
 ```{r echo = FALSE}
 library(ggplot2)

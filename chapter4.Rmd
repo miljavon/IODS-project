@@ -5,6 +5,10 @@ date: "15 helmikuuta 2017"
 output: html_document
 ---
 
+#Chapter 4
+
+In this chapter I will learn about LDA and clustering. 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -65,5 +69,66 @@ Here I will do linear discriminant analysis to observe the data. The target vari
 ```{r}
 library(MASS)
 lda.fit <- lda(crime ~ ., data = train)
+lda.fit
+lda.arrows <- function(x, myscale = 1, arrow_heads = 0.1, color = "red", tex = 0.75, choices = c(1,2)){
+  heads <- coef(x)
+  arrows(x0 = 0, y0 = 0, 
+         x1 = myscale * heads[,choices[1]], 
+         y1 = myscale * heads[,choices[2]], col=color, length = arrow_heads)
+  text(myscale * heads[,choices], labels = row.names(heads), 
+       cex = tex, col=color, pos=3)
+}
+classes <- as.numeric(train$crime)
+plot(lda.fit, dimen = 2)
+lda.arrows(lda.fit, myscale = 1)
 ```
+
+Saving the crime categories from the test set and removing them from the test dataset:
+
+```{r}
+testcrime <- test$crime
+test <- dplyr::select(test, -crime)
+
+```
+
+Predicting the classes with the LDA model on the test data and cross tabulating the results:
+```{r}
+lda.pred <- predict(lda.fit, newdata = test)
+table(correct = testcrime, predicted = lda.pred$class)
+```
+
+The results seem to be quite good: at least when it comes to low crime rates the model was most of the time able to notice that. Especially when the crime rates were high the model was able to predict it correctly. 
+
+Reloading the Boston dataset and standardizing the dataset: 
+```{r}
+library(MASS)
+data(Boston)
+sandard_boston <- scale(Boston)
+```
+
+Calculating the distances between the observations, and running k-means algorithm.
+```{r}
+dist_eu <- dist(Boston)
+km <-kmeans(dist_eu, centers = 4)
+pairs(sandard_boston, col = km$cluster)
+```
+
+Now I'll se what the optimal number of clusters is: 
+```{r}
+set.seed(123)
+k_max <- 10
+twcss <- sapply(1:k_max, function(k){kmeans(dist_eu, k)$tot.withinss})
+plot(1:k_max, twcss, type='b')
+```
+
+ 
+It seems that the optimal number of clusters is that of 2. 
+```{r}
+library(ggplot2)
+library(GGally)
+dist_eu <- dist(Boston)
+km <-kmeans(dist_eu, centers = 2)
+pairs(sandard_boston, col = km$cluster)
+```
+Here we see the clusters. I hoped I could somehow make the plot bigger. We can still see how there are two groups in everything: for example in criminality, the amount of people who commit crime is very small. 
 

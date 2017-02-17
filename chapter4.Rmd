@@ -130,5 +130,5 @@ dist_eu <- dist(Boston)
 km <-kmeans(dist_eu, centers = 2)
 pairs(sandard_boston, col = km$cluster)
 ```
-Here we see the clusters. I hoped I could somehow make the plot bigger. We can still see how there are two groups in everything: for example in criminality, the amount of people who commit crime is very small. 
+Here we see the clusters. I hoped I could somehow make the plot bigger. We can still see how there are two groups in everything: for example in criminality, the amount of people who commit crime is small.
 

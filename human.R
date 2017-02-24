@@ -15,8 +15,8 @@ hd$i <- hd$Human.Development.Index..HDI.
 hd$life<-hd$Life.Expectancy.at.Birth
 hd$eduexp<-hd$Expected.Years.of.Education
 hd$edumean <- hd$Mean.Years.of.Education
-gii$gni <- hd$Gross.National.Income..GNI..per.Capita
-gii$gni_minus_hdi <-hd$GNI.per.Capita.Rank.Minus.HDI.Rank
+hd$gni <- hd$Gross.National.Income..GNI..per.Capita
+hd$gni_minus_hdi <-hd$GNI.per.Capita.Rank.Minus.HDI.Rank
 gii$rank <- gii$GII.Rank
 gii$country <- gii$Country
 gii$gii <- gii$Gender.Inequality.Index..GII.
@@ -27,11 +27,42 @@ gii$seceduf <- gii$Population.with.Secondary.Education..Female.
 gii$secedum <- gii$Population.with.Secondary.Education..Male.
 gii$laborf <- gii$Labour.Force.Participation.Rate..Female.
 gii$laborm <- gii$Labour.Force.Participation.Rate..Male.
+#colnames(gii)[1] <- c("a")
+hd1 <- select(hd, -(1:8))
+str(hd1)
+gii1 <- select(gii, -(1:11))
+gii2 <- select(gii1, -(1))
+str(gii2)
+
 #Mutating the data
 library(dplyr)
-ratioe <- mutate(gii, ratioedu = seceduf/secedum)
-ratiol <- mutate(gii, ratiolabour = laborf/laborm)                 
-#Joining the data
-join_by <- c("giicountry","hdcountry")
-human <- inner_join(gii, hd, by = join_by, suffix = c(".gii", ".hd") )
+gii <- mutate(gii, ratioedu = seceduf/secedum)
+gii <- mutate(gii, ratiolabour = laborf/laborm)
+str(gii)
 
+#Joining the data
+join_by <- c("country")
+human <- inner_join(gii2, hd1, by = join_by, suffix = c(".gii", ".hd") )
+
+#The GNI as numeric
+library(tidyr)
+library(stringr)
+str_replace(human$gni, pattern=",", replace ="")%>%as.numeric
+human$gni
+
+#Keeping only the certain columns
+keep <- c("country", "seceduf", "laborf", "life", "eduexp", "gni", "mother_dead", "preggo", "repres")
+human <- select(human, one_of(keep))
+str(human)
+
+#Filtering out the NA s
+human_ <- filter(human, complete.cases(human))
+#Excluding the rows of areas
+last <- nrow(human) - 7
+human_ <- human[1:last, ]
+
+#Adding countries as rownames
+rownames(human_) <- human_$country
+human_ <- select(human, -country)
+str(human_)
+install.packages("FactoMineR")

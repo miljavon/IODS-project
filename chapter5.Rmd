@@ -1,0 +1,68 @@
+---
+title: "Chapter 5"
+author: "Milja von Lerber"
+date: "23 helmikuuta 2017"
+output: html_document
+---
+
+# Chapter 5
+
+First I'll start my analysis by loading the data into r and exploring the sructure and dimensions of the data. 
+
+```{r}
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep = ",", header = TRUE)
+str(human)
+dim(human)
+```
+Since I loaded the readlily wrangeled dataset, I have the following variables: Edu2.FM, Labo.FM, Edu.Exp, Life.Exp, GNI, Mat.Mor, Ado.Birth and Parli.F. I have 155 observations of all these 8 variables. I also had to check that the gni values were in fact numeric. 
+
+```{r}
+library(ggplot2)
+library(GGally)
+ggpairs(human)
+library(stringr)
+
+```
+From this ggparis plot we can see the correlations of the variables including their distribution. We can see, that surprisingly many women get a secondary education and are economically active (working). Expected length of education seems to be quite evenly distributed as a bell curve. Most people have quite a long life expectancy. GNI index and maternal mortility seem to be distributed to the negative side, as is abdolecent birth rate. Women still are not represented in the parliament in the same way men are. 
+
+Life expectancy and expected amount of education are strongly correlated, as are life expectancy and maternal mortility (maternal mortility is negatively correlated).Maternal mortility and abdolecent birth rate are closely related as well. 
+
+```{r}
+pca_human <- prcomp(human)
+biplot(pca_human, choices = 1:2, cex = c(0.8,1), col = c("grey40", "deeppink2"))
+```
+This was the biplot of the non-standardized data. Now I will standardize the data and see how the picture changes. 
+
+```{r}
+human_std <- scale(human)
+pca_humanstd <- prcomp(human_std)
+biplot(pca_humanstd, choices = 1:2, cex = c(0.8,1), col = c("grey40", "deeppink2"))
+```
+
+Now, when the variables are standardized, the results are comparable to oneanother. Otherwise because of recent developement the variables are not evenly distributed, which makes the comparing hard between the countries. 
+
+So it seems, that life expectancy and education are clearly linked and the northern countries seem to be leading the way in the "good stuff". On the other hand, maternal mortility and abdolecent birth rate are in a completely different direction from the othervariables, that usually describe the positive developement. 
+
+First two principal component dimensions seem to be according to my analysis vertically the overall developement of the countries (life expectancy on one hand and maternal mortality in another) and the quality of life. The other dimension is closely related to women's rights: there are labor participation and amount of representatives in parliament. 
+
+So now I will move on to the tea dataset: 
+```{r}
+library(FactoMineR)
+library(dplyr)
+library(tidyr)
+data("tea")
+str(tea)
+keep_columns <- c("Tea", "evening", "price", "sugar", "sex")
+tea_time <- select(tea, one_of(keep_columns))
+gather(tea_time) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar() + theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8))
+
+```
+The Dataset tea seems to have 300 observations of 36 variables.  I did also visualize parts of the data (evening, sugar, the type of tea, price and the sex of a  typical tea drinker) with ggpairs, because the whole dataset proved to be too large to handle easily. 
+
+Running multiple correspondance analysis on tea time: 
+```{r}
+mca <- MCA(tea_time, graph = FALSE)
+plot(mca, invisible=c("ind"))
+```
+
+From the plot we can see for example that when people drink tea in the evening, sugar is often used, whereas if the tea was drunk earlier, usually no sugar was involved. We can also see, that black tea is often more expensive than for example green tea. 
